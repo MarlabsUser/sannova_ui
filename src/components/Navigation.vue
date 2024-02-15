@@ -8,14 +8,15 @@
 </template>
 
 <script>
-var obj = JSON.parse(localStorage.getItem("user_info"));
-console.log(obj.data.authorization)
-var authorization = JSON.parse(obj.data.authorization);
+
 
 export default{
     name: 'Nav',
     data()
         {
+          var obj = JSON.parse(localStorage.getItem("user_info"));
+          console.log(obj.data.authorization)
+          var authorization = JSON.parse(obj.data.authorization);
             return {
                 formData: {
                     documentTemplateUpload: authorization.document_template_upload,
@@ -24,6 +25,13 @@ export default{
                 },               
             }
         },
+        mounted(){
+          let userinfo=localStorage.getItem('user_info');
+          console.log(userinfo)
+          if(userinfo==null){
+            this.$router.push({path: '/'})
+          }
+    } 
 }
 </script>
 
