@@ -38,7 +38,6 @@ export default{
         },
         methods: {
           logout: function() {
-            console.log("logiut")
             localStorage.clear();
             util.navigate();
           },

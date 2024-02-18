@@ -55,7 +55,6 @@ export default{
     },
     methods:{
         getDateFormat(inputDate){
-            console.log("inputDate, "+inputDate);
             if(inputDate){
                 const day = this.fromDate.getDate().toString().padStart(2, "0");
                 const month = (this.fromDate.getMonth() + 1).toString().padStart(2, "0");
@@ -70,7 +69,6 @@ export default{
             if(this.serialNumber!=''){
                 const substringValue=this.serialNumber.substring(this.serialNumber.length-4);
                 var reg = new RegExp('^[0-9]*$');
-                console.log(reg.test(substringValue));
                 if(!reg.test(substringValue)){
                     validSerial=false;
                 }else{
@@ -93,15 +91,12 @@ export default{
                     "to-date": this.getDateFormat(this.toDate)
                     }
                 const response=await api.postAPI("http://localhost:8090/sannova/reconsiliation",payload,"application/json");
-                console.log(response)
             }
         },
         emptyStudyNumber(){
-            console.log("emptyStudyNumber");
             this.serialNumber='';
         },
         emptyDate(){
-            console.log("emptyDate");
             this.fromDate='';
             this.toDate='';
         }

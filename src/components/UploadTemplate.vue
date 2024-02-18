@@ -91,7 +91,6 @@ export default{
           this.fileDetails=response.data
         },
         async deleteFiles(){
-          console.log("deleteFiles ",this.template_ids[0] )
           let element = "";
           for (let index = 0; index < this.template_ids.length; index++) {
             if(index==0){

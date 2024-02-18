@@ -45,8 +45,6 @@ export default{
         async print(){
             let response=await api.blobPostAPI("http://localhost:8090/sannova/form_confirmation_details"
             ,this.tableDate,'application/json');
-              
-              console.log(response)
               try{
                 const blob = response.data;
                   const url = window.URL.createObjectURL(blob);
