@@ -49,8 +49,10 @@
 <script>
 import Nav from './Navigation.vue'
 import axios from 'axios'
+import util from '../util.js'
+import api from '../api.js';
 export default{
-  name:'Home',
+  name:'UploadTemplate',
   data(){
       return {
         studyitem: [],   
@@ -63,47 +65,24 @@ export default{
     Nav
   },
   methods:{
-        getStudyTypes(){
-            console.log("clicked");
-            console.log("call started")
-            axios.get("http://localhost:8090/sannova/study_types")
-                .then(response => {
-                  console.log(response.data)
-                  this.studyitem=response.data
-                  console.log(this.studyitem)
-                })
-                .catch(error => console.log(error));
+        async getStudyTypes(){
+          let response=await api.getAPI("http://localhost:8090/sannova/study_types");
+          this.studyitem=response.data;
         },
-        handleFileUpload(event ){
-            console.log(event.target.files)
+        async handleFileUpload(event ){
             let formData = new FormData();
-           
             formData.append('study_id', this.selectedStudytype);
             for (const singleFile of event.target.files) {
               formData.append('file', singleFile);
             }
-            
-            axios.post("http://localhost:8090/sannova/upload_template",
-                      formData,
-                      {headers: {'Content-Type': 'multipart/form-data'}
-                  })
-                .then(response => {
-                  console.log(response)
-                  this.getFileDetail();
-                })
-                .catch(error => console.log(error));
+            let response=await api.postAPI("http://localhost:8090/sannova/upload_template",formData,'multipart/form-data');
+            this.getFileDetail();
         },
-        getFileDetail(){
-          console.log("getFileDetail " )
-          console.log( this.selectedStudytype)
-            axios.get("http://localhost:8090/sannova/template_details/"+this.selectedStudytype)
-                .then(response => {
-                  console.log('getFileDetail:',response.data)
-                  this.fileDetails=response.data
-                })
-                .catch(error => console.log(error));
+        async getFileDetail(){
+          let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
+          this.fileDetails=response.data
         },
-        deleteFiles(){
+        async deleteFiles(){
           console.log("deleteFiles ",this.template_ids[0] )
           let element = "";
           for (let index = 0; index < this.template_ids.length; index++) {
@@ -113,28 +92,18 @@ export default{
               element =element+"&ids="+this.template_ids[index];
             }
           }
-          axios.delete('http://localhost:8090/sannova/delete_template?'+element)
-                .then(response => {
-                  console.log('deleteFiles:',response.data)
-                  this.getFileDetail();
-                })
-                .catch(error => console.log(error));
+          let response=await api.deleteAPI('http://localhost:8090/sannova/delete_template?'+element);
+          this.getFileDetail();
         }
     },
   mounted(){
-          let userinfo=localStorage.getItem('user_info');
-          console.log(userinfo)
-          if(userinfo==null){
-            this.$router.push({path: '/'})
-          }
+          util.navigate();
           this.getStudyTypes();
     } 
 }
 </script>
 <style>
-.main {
-  margin-left: 18%; /* Same as the width of the sidenav */
-}
+
 .studyStyle{
   text-align: left;
 }

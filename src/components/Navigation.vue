@@ -1,21 +1,21 @@
 <template>
 <div class="sidenav">
   <a href="#">SONNAV</a>
-  <a v-if="formData.documentTemplateUpload" href="#" >Upload Template</a>
-  <a v-if="formData.formSelection" href="#">Form Selection</a>
-  <a v-if="formData.studyReconcillation" href="#">Reconsiliation</a>
+  <a v-if="formData.documentTemplateUpload" href="/uploadTemplate" >Upload Template</a>
+  <a v-if="formData.formSelection" href="/formSelection">Form Selection</a>
+  <a v-if="formData.studyReconcillation" href="/reconsiliation">Reconsiliation</a>
+  <button type="button" class="block" v-on:click="logout">Logout</button>
 </div>
 </template>
 
 <script>
 
-
+import util from '../util.js'
 export default{
     name: 'Nav',
     data()
         {
           var obj = JSON.parse(localStorage.getItem("user_info"));
-          console.log(obj.data.authorization)
           var authorization = JSON.parse(obj.data.authorization);
             return {
                 formData: {
@@ -26,12 +26,16 @@ export default{
             }
         },
         mounted(){
-          let userinfo=localStorage.getItem('user_info');
-          console.log(userinfo)
-          if(userinfo==null){
-            this.$router.push({path: '/'})
+          util.navigate();
+        },
+        methods: {
+          logout: function() {
+            console.log("logiut")
+            localStorage.clear();
+            util.navigate();
           }
-    } 
+        },
+        
 }
 </script>
 
@@ -64,6 +68,24 @@ body {
 
 .sidenav a:hover {
   color: #f1f1f1;
+}
+
+.block {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #a7c8ff;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+}
+
+.main {
+  margin-left: 18%; /* Same as the width of the sidenav */
+  margin-top: 2%;
 }
 
 @media screen and (max-height: 450px) {

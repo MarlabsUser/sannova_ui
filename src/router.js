@@ -1,6 +1,8 @@
 import Login from './components/Login'
-import Home from './components/Home'
-import Test from './components/Test'
+import UploadTemplate from './components/UploadTemplate'
+import FormSelection from './components/FormSelection'
+import Reconsiliation from './components/Reconsiliation'
+import FormPrint from './components/FormPrint'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -11,12 +13,21 @@ const router = createRouter({
         component: Login,
       },
       {
-        path: '/home',
-        component: Home,
+        path: '/uploadTemplate',
+        component: UploadTemplate,
       },
       {
-        path: '/test',
-        component: Test,
+        path: '/formSelection',
+        component: FormSelection,
+      },
+      ,
+      {
+        path: '/reconsiliation',
+        component: Reconsiliation,
+      },
+      {
+        path: '/formPrint',
+        component: FormPrint
       }
     ]
   })

@@ -20,6 +20,7 @@
 
 <script>
 import axios from 'axios'
+import util from '../util.js'
     export default{
         name: 'Login',
         data()
@@ -33,22 +34,18 @@ import axios from 'axios'
         },
         methods: {
              login(){
-                console.log(this.formData);
                 axios.post("http://localhost:8090/sannova/login",this.formData
                 ,{headers: {'Content-Type': 'application/json'}})
                 .then(response => {
-                  console.log(response)
                   localStorage.setItem("user_info",JSON.stringify(response))
-                  this.$router.push({path: '/home'})
+                  util.afterloginNavigation();
                 })
-                .catch(error => console.log(error));
-            }
+                .catch(error => console.log("error",error));
+            },
         },
         mounted(){
-          let userinfo=localStorage.getItem('user_info');
-          if(userinfo){
-            this.$router.push({path:'/Home'});
-          }
+          util.navigate();
+          util.afterloginNavigation();
         }
 
     };
