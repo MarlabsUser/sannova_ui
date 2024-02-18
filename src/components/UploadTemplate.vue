@@ -1,24 +1,33 @@
 <template>
-  <Nav/>
+  <Nav navPageName="uploadTemplate"/>
   <div class="main">
     <div>
-      <div class="headerp"><p>Document Template Setup</p></div>
-      <div class="uploadh">
-        <label class="custom-file-upload">
+      <ul class="nav">
+        <li class="uli1_dts">Document Template Setup</li>
+        <li class="buttonWrapper">
+          <label  class="clickbutton" >
             <input type="file" multiple @change="handleFileUpload( $event )"/>
             <i class="fa fa-cloud-upload"></i> Upload
-      </label>
-      </div>
-      <div class="custom-file-upload" @click="deleteFiles"> <i class="fa fa-cloud-upload"></i> Delete </div>
+          </label>
+        </li>
+        <li class="buttonWrapper"><a href="#" class="clickbutton" @click="deleteFiles">Delete</a></li>
+      </ul>
     </div>
-    <div class="headerp"><p>Study types</p></div>
-    <div class="studyStyle">
-      <div v-for="study in studyitem" :key="study.study_id">
-        <input type="radio" :id=study.study_id name="study" :value=study.study_id 
-        v-model="selectedStudytype"  @change="getFileDetail">
-        <label :for=study.study_id>{{study.study_name}}</label><br>
-      </div>
+    
+    <div>
+      <ul class="nav">
+        <li class="uli1_sst">Select Study types *</li>
+        <li>
+          <div class="studyStyle">
+            <div v-for="study in studyitem" :key="study.study_id">
+              <input type="radio" :id=study.study_id name="study" :value=study.study_id v-model="selectedStudytype" @change="getFileDetail">
+              <label :for=study.study_id>{{study.study_name}}</label><br>
+            </div>
+        </div>
+        </li>
+      </ul>
     </div>
+
     <div class="showfileStyle">
       <div class="headerp"><p>All uploaded files</p></div>
       <div>
@@ -33,14 +42,13 @@
           </thead>
           <tbody>
             <tr v-for="item in fileDetails" :key="item.template_id">
-                 <td><input type="checkbox" :id="item.template_id" :value="item.template_id" v-model="template_ids"></td>
-                 <td>{{ item.template_name }}</td>
-                 <td>{{ item.uploaded_by }}</td>
-                 <td>{{ item.created_date }}</td>
+              <td><input type="checkbox" :id="item.template_id" :value="item.template_id" v-model="template_ids"></td>
+              <td>{{ item.template_name }}</td>
+              <td>{{ item.uploaded_by }}</td>
+              <td>{{ item.created_date }}</td>
             </tr>
           </tbody>
-        
-          </table>
+        </table>
       </div>
     </div>
   </div>
@@ -121,4 +129,27 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+.upload{
+  margin-right: 1%;
+}
+.delete{
+  margin-right: 1%;
+}
+
+.uli1_dts{
+    margin-right: 2%;
+    height: 41px;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 1%;
+  }
+
+.uli1_sst{
+    margin-right: 7%;
+    height: 41px;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 1%;
+  }
+
 </style>

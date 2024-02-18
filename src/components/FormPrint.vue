@@ -1,5 +1,5 @@
 <template>
- <Nav/>
+  <Nav navPageName="formSelection"/>
   <div class="main">
     <table class="table table-hover">
         <thead>
@@ -18,13 +18,18 @@
         </tbody>
     </table>
     <ul class="nav">
-        <li><a href="#" class="square_btn" @click="print">Print</a></li>
+        <li class="buttonWrapper">
+          <a href="#"  class="clickbutton" @click="print">Print </a>
+        </li>
+        <li class="buttonWrapper">
+          <a href="#"  class="clickbutton" @click="cancel">cancel</a>
+        </li>
       </ul>
   </div>
    
 </template>
 <script>
-
+import router from '../router'
 import util from '@/util';
 import Nav from './Navigation.vue'
 import axios from 'axios'
@@ -54,6 +59,9 @@ export default{
               }catch(error){
                 console.error('error download ',error)
               }
+        },
+        cancel(){
+          router.push({path:'/formSelection'});
         }
     },
     mounted(){

@@ -1,5 +1,5 @@
 <template>
-    <Nav/>
+    <Nav navPageName="reconsiliation"/>
     <div class="main">
         <div>
             <ul class="nav">
@@ -116,8 +116,5 @@ export default{
     line-height: 41px;
     text-align: center;
     margin-bottom: 1%;
-  }
-  .leftli3{
-  padding-left: 27%;
   }
 </style>

@@ -1,15 +1,15 @@
 <template>
-    <Nav/>
+  <Nav navPageName="formSelection"/>
   <div class="main">
     <div>
       <ul class="nav">
-        <li class="leftli1">Study Number *</li>
-        <li class="leftli2"><button class="buttonLeft1">{{studynumber}}</button></li>
+        <li class="uli1_sn">Study Number *</li>
+        <li><button class="button_sn">{{studynumber}}</button></li>
       </ul>
     </div>
     <div>
       <ul class="nav">
-        <li class="leftli3">Select Study types *</li>
+        <li class="uli1_sst_fs">Select Study types *</li>
         <li>
           <div class="studyStyle">
           <div v-for="study in studyitem" :key="study.study_id">
@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div><ul class="nav">
-        <li class="leftli1">From Types *</li>
+        <li class="uli1_ft">From Types *</li>
         <li>
           <table class="table table-hover">
             <thead>
@@ -41,8 +41,8 @@
                 </select>
                 </td>
                 <td><div class="CountForm"><button class="desincbutton" disabled>-</button>0<button disabled class="desincbutton">+</button></div></td>
-                <td><a href="#" class="square_btn" @click="addRow" disabled>Add More</a></td>
-                <td><a href="#" class="square_btn" :id=index @click="removeRow(index)" disabled>Delete</a></td>
+                <td><a href="#" class="clickbutton" @click="addRow" disabled>Add More</a></td>
+                <td><a href="#" class="clickbutton" :id=index @click="removeRow(index)" disabled>Delete</a></td>
               </tr>
               <tr else v-for="row,index in rows" :key="row.index">
                 <td :id=index>
@@ -59,8 +59,8 @@
                   <button class="desincbutton" @click="increase(row.tCount,index)">+</button>
                   </div>
                 </td>
-                <td ><a href="#" class="square_btn" @click="addRow">Add More</a></td>
-                <td ><a href="#" class="square_btn" :id=index @click="removeRow(index)">Delete</a></td>
+                <td class="buttonWrapper"><a href="#" class="clickbutton" @click="addRow">Add More</a></td>
+                <td class="buttonWrapper"><a href="#" class="clickbutton" :id=index @click="removeRow(index)">Delete</a></td>
               </tr>
             </tbody>
           </table>
@@ -69,7 +69,7 @@
     </div>
     <div>
       <ul class="nav">
-        <li class="leftli1"><a href="#" class="square_btn" @click="confirm">Confirm</a></li>
+        <li class="buttonWrapper"><a href="#" class="clickbutton" @click="confirm">Confirm</a></li>
       </ul>
     </div>
   </div>
@@ -181,20 +181,24 @@ export default{
 </script>
 
 <style>
-  .leftli1{
+  .uli1_ft{
+    margin-right: 7%;
+    height: 41px;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 1%;
+    margin-top: 7%;
+  }
+  .uli1_sn{
     margin-right: 7%;
     height: 41px;
     line-height: 41px;
     text-align: center;
     margin-bottom: 1%;
   }
-  .buttonLeft1{
+  .button_sn{
     padding: 12%;
     border: none;
-  }
-  .leftli3{
-    margin-right: 4%;
-    margin-bottom: 1%;
   }
   .CountForm{
     border: 2px solid black;
@@ -205,25 +209,17 @@ export default{
     padding: 0 15%;
     background-color: transparent;
   }
-  .square_btn{
-    display: inline-block;
-    padding: 0.1em 0.2em;
-    text-decoration: none;
-    background: #668ad8;
-    color: #FFF;
-    border-bottom: solid 4px #627295;
-    border-radius: 10%;
-    margin-top: 6%;
-}
-.square_btn:active {/*OnClick*/
-    -ms-transform: translateY(4px);
-    -webkit-transform: translateY(4px);
-    transform: translateY(4px);/*Move down*/
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*Reduce Shadow*/
-    border-bottom: none;
-}
+  
 .prevent{
   pointer-events: none;
+}
+
+.uli1_sst_fs{
+    margin-right: 4%;
+    height: 41px;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 1%;
 }
   
 </style>
