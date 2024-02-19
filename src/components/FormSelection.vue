@@ -143,15 +143,23 @@ export default{
         async getFileDetail(){
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
           this.fileDetails=response.data
-          this.fileDetails.map(v => Object.assign(v, {status: false}))
+          if(this.fileDetails.length==0){
+            alert("No template avilable for selected study types.")
+          }else{
+            this.fileDetails.map(v => Object.assign(v, {status: false}))
+          }
         },
         updateTemplateDropdown(event,rowIndex){
-          let value=event.target.value;
-          const templateObj=this.fileDetails.filter(v=>v.template_id==value).map(v=>v.template_name);
-          this.rows[rowIndex].template_id=value;
-          this.rows[rowIndex].template_name=templateObj[0];
-          this.rows[rowIndex].studyId=this.selectedStudytype;
-          this.rows[rowIndex].studyNumber=this.studynumber;
+          if(this.fileDetails.length==0){
+            alert("No template avilable for selected study types.")
+          }else{
+            let value=event.target.value;
+            const templateObj=this.fileDetails.filter(v=>v.template_id==value).map(v=>v.template_name);
+            this.rows[rowIndex].template_id=value;
+            this.rows[rowIndex].template_name=templateObj[0];
+            this.rows[rowIndex].studyId=this.selectedStudytype;
+            this.rows[rowIndex].studyNumber=this.studynumber;
+          }
         },
         decrease(count,index){
           if(count>0){

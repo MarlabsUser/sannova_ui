@@ -15,8 +15,10 @@
                 <li>.......</li>
                 <li><Datepicker @click="emptyStudyNumber" v-model="toDate" :preview-format="format"  /></li>
             </ul>
+        </div>
+        <div>
             <ul class="nav">
-                <li class="leftli1"><a href="#" class="square_btn" @click="getDetails">Get Details</a></li>
+                <li class="buttonWrapper"><a href="#" class="clickbutton" @click="getDetails">Get Details</a></li>
             </ul>
         </div>
     </div>
