@@ -153,7 +153,7 @@ export default{
           this.rows[index].tCount=count+1;
         },
         confirm(){
-          if(this.rows.length!=0){
+          if(this.rows.length==0){
             alert("Please select study types and no of files")
           }else{
                 let userinfo=JSON.parse(localStorage.getItem('user_info'));    
