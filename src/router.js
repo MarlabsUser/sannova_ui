@@ -29,6 +29,7 @@ const router = createRouter({
         path: '/formPrint',
         component: FormPrint
       }
+      
     ]
   })
 export default router

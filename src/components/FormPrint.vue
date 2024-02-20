@@ -7,6 +7,7 @@
                 <th>sl.no</th>
                 <th>Form Title</th>
                 <th>No. Of form</th>
+                <th>Form Serial No</th>
             </tr>
         </thead>
         <tbody>
@@ -14,6 +15,7 @@
                 <td>{{index}}</td>
                 <td>{{row.template_name}}</td>
                 <td>{{row.formCount}}</td>
+                <td>{{tableDate.studyNumber}}</td>
             </tr>
         </tbody>
     </table>

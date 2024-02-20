@@ -40,7 +40,10 @@ import util from '../util.js'
                   localStorage.setItem("user_info",JSON.stringify(response))
                   util.afterloginNavigation();
                 })
-                .catch(error => console.log("error",error));
+                .catch(error => {
+                  console.log("error",error)
+                  alert("Please provide correct cridentail")
+                });
             },
         },
         mounted(){

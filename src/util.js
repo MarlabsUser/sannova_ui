@@ -29,5 +29,19 @@ export default {
                 router.push({path:'/'});
             }
         }
+    },
+    downloadZipFile(response,fileName){
+        try{
+            const blob = response;
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download',fileName+'.zip');
+               document.body.appendChild(link);
+              link.click()
+              window.URL.revokeObjectURL(link);
+          }catch(error){
+            console.error('error download ',error)
+          }
     }
   }

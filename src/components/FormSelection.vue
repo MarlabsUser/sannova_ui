@@ -50,23 +50,6 @@
                 </td>
                 <td class="buttonWrapper"><a href="#" class="clickbutton" @click="addRow">Add More</a></td>
                 <td class="buttonWrapper"><a href="#" class="clickbutton" @click="removeRow(index)">Delete</a></td>
- 
-                <!-- <td :id=index>
-                <select class="form-select" @change="addTemplate($event)">
-                    <option selected :value="0" :id="index">Default Form Select</option>
-                    <option :value="sfile.template_id" v-for="sfile,index in fileDetails" :key="sfile.template_id" :id="index">
-                      {{sfile.template_name}}</option>
-                </select>
-                </td>
-                <td>
-                  <div class="CountForm">
-                  <button class="desincbutton" @click="decrease(row.tCount,index)">-</button>
-                  {{row.tCount}}
-                  <button class="desincbutton" @click="increase(row.tCount,index)">+</button>
-                  </div>
-                </td>
-                <td class="buttonWrapper"><a href="#" class="clickbutton" @click="addRow">Add More</a></td>
-                <td class="buttonWrapper"><a href="#" class="clickbutton" :id=index @click="removeRow(index)">Delete</a></td> -->
               </tr>
             </tbody>
           </table>
@@ -170,29 +153,33 @@ export default{
           this.rows[index].tCount=count+1;
         },
         confirm(){
-          let userinfo=JSON.parse(localStorage.getItem('user_info'));    
-          const finalRequestArray=[];
-          for (const key in this.rows) {
-            if(this.rows[key].template_id!=0){
-              let ObjectValue=this.rows[key];
-              if(ObjectValue.tCount!=0){
-                finalRequestArray.push(ObjectValue);
+          if(this.rows.length!=0){
+            alert("Please select study types and no of files")
+          }else{
+                let userinfo=JSON.parse(localStorage.getItem('user_info'));    
+                const finalRequestArray=[];
+                for (const key in this.rows) {
+                  if(this.rows[key].template_id!=0){
+                    let ObjectValue=this.rows[key];
+                    if(ObjectValue.tCount!=0){
+                      finalRequestArray.push(ObjectValue);
+                    }
+                  }
+                }   
+                if(finalRequestArray.length!=0){
+                    const templatePayload= finalRequestArray.map(value=>
+                            {return {"formCount": value.tCount,"templateId":value.template_id,"template_name":value.template_name}})
+                    const finalPyload={
+                      "studyId": this.selectedStudytype,
+                      "studyNumber": this.studynumber,
+                      "username": userinfo.data.userName,
+                      "templateDetails":templatePayload
+                    }
+                    localStorage.setItem("form_Print",JSON.stringify(finalPyload))
+                    router.push({path:'/formPrint'});
+                  }
               }
             }
-          }   
-          if(finalRequestArray.length!=0){
-              const templatePayload= finalRequestArray.map(value=>
-                      {return {"formCount": value.tCount,"templateId":value.template_id,"template_name":value.template_name}})
-              const finalPyload={
-                "studyId": this.selectedStudytype,
-                "studyNumber": this.studynumber,
-                "username": userinfo.data.userName,
-                "templateDetails":templatePayload
-              }
-              localStorage.setItem("form_Print",JSON.stringify(finalPyload))
-              router.push({path:'/formPrint'});
-            }
-        }
       },
     mounted(){
       util.navigate();

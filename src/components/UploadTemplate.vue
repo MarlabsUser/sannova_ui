@@ -4,13 +4,24 @@
     <div>
       <ul class="nav">
         <li class="uli1_dts">Document Template Setup</li>
-        <li class="buttonWrapper">
-          <label  class="clickbutton" >
-            <input type="file" multiple @change="handleFileUpload( $event )"/>
-            <i class="fa fa-cloud-upload"></i> Upload
-          </label>
-        </li>
-        <li class="buttonWrapper"><a href="#" class="clickbutton" @click="deleteFiles">Delete</a></li>
+        <template v-if="this.selectedStudytype==''">
+          <li class="buttonWrapper">
+            <label  class="clickbutton" @click="validateUpload()">
+               Upload
+            </label>
+          </li>
+        </template>
+        <template v-else>
+          <li class="buttonWrapper">
+            <label  class="clickbutton" @change="handleFileUpload( $event )">
+              <input type="file" multiple />
+              <i class="fa fa-cloud-upload"></i> Upload
+            </label>
+          </li>
+        </template>
+        <template v-if="template_ids.length==0"><li class="buttonWrapper"><a href="#" class="clickbutton" @click="validateDelete">Delete</a></li></template>
+        <template v-else><li class="buttonWrapper"><a href="#" class="clickbutton" @click="deleteFiles">Delete</a></li></template>
+        
       </ul>
     </div>
     
@@ -85,6 +96,12 @@ export default{
             }
             let response=await api.postAPI("http://localhost:8090/sannova/upload_template",formData,'multipart/form-data');
             this.getFileDetail();
+        },
+        validateUpload(){
+          alert("Please select study type")
+        },
+        validateDelete(){
+          alert("Please select uploaded files")
         },
         async getFileDetail(){
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
