@@ -3,6 +3,7 @@
   <h2 class="customlogo">SONNAVA</h2>
   <ul class="navsidelist">
     <li :class="uploadTemplate ? 'navlistActive' : 'navlist'" v-if="formData.documentTemplateUpload" @click="navRedirection('uploadTemplate')">Upload Template</li>
+    <li :class="viewTemplate ? 'navlistActive' : 'navlist'" v-if="formData.viewTemplate" @click="navRedirection('viewTemplate')">View Template</li>
     <li :class="formSelection ? 'navlistActive' : 'navlist'" v-if="formData.formSelection" @click="navRedirection('formSelection')">Form Selection</li>
     <li :class="reconsiliation ? 'navlistActive' : 'navlist'" v-if="formData.studyReconcillation" @click="navRedirection('reconsiliation')">Reconsiliation</li>
   </ul>
@@ -24,10 +25,12 @@ export default{
                 uploadTemplate: false,
                 formSelection: false,
                 reconsiliation: false,
+                viewTemplate: false,
                 formData: {
                     documentTemplateUpload: authorization.document_template_upload,
                     formSelection: authorization.form_selection,
-                    studyReconcillation: authorization.study_reconcillation
+                    studyReconcillation: authorization.study_reconcillation,
+                    viewTemplate: authorization.view_template,
                 }              
             }
 
@@ -51,6 +54,8 @@ export default{
               this.formSelection=true;
             }else if(this.navPageName=='reconsiliation'){
               this.reconsiliation=true;
+            }else if(this.navPageName=='viewTemplate'){
+              this.viewTemplate=true;
             }
           }
         },

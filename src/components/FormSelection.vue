@@ -3,12 +3,6 @@
   <div class="main">
     <div>
       <ul class="nav">
-        <li class="uli1_sn">Study Number *</li>
-        <li><button class="button_sn">{{studynumber}}</button></li>
-      </ul>
-    </div>
-    <div>
-      <ul class="nav">
         <li class="uli1_sst_fs">Select Study types *</li>
         <li>
           <div class="studyStyle">
@@ -21,9 +15,16 @@
         </li>
       </ul>
     </div>
+  <br>
+    <div>
+      <ul class="nav">
+        <li class="uli1_sn">Study Number *</li>
+        <li><button class="button_sn">{{studynumber}}</button></li>
+      </ul>
+    </div>
     <div><ul class="nav">
         <li class="uli1_ft">From Types *</li>
-        <li>
+        <li class="tableContainer_forms">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -35,8 +36,8 @@
             </thead>
             <tbody>
               <tr v-for="row,index in rows" :key="index">
-                <td>
-                  <select class="form-select" @change="updateTemplateDropdown($event,index)">
+                <td class="customformselect">
+                  <select class="form-select" @change="updateTemplateDropdown($event,index)" >
                     <option selected :value="0">Default Form Select</option>
                     <option v-for="sfile in fileDetails" :key="sfile.template_id" :value="sfile.template_id">{{sfile.template_name}}</option>
                 </select>
@@ -71,6 +72,7 @@ import util from '@/util';
 import api from '../api.js';
 import Nav from './Navigation.vue'
 import { reactive } from 'vue'
+import { toast } from 'vue3-toastify'
 
 export default{
     name:'FormSelection',
@@ -127,22 +129,23 @@ export default{
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
           this.fileDetails=response.data
           if(this.fileDetails.length==0){
-            alert("No template avilable for selected study types.")
+            toast("No template is available for selected study types.",{
+                        autoClose: 3000,
+                        type: toast.TYPE.WARNING,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
           }else{
             this.fileDetails.map(v => Object.assign(v, {status: false}))
           }
         },
         updateTemplateDropdown(event,rowIndex){
-          if(this.fileDetails.length==0){
-            alert("No template avilable for selected study types.")
-          }else{
             let value=event.target.value;
-            const templateObj=this.fileDetails.filter(v=>v.template_id==value).map(v=>v.template_name);
+            const templateObj=value==0?'':this.fileDetails.filter(v=>v.template_id==value).map(v=>v.template_name);
             this.rows[rowIndex].template_id=value;
             this.rows[rowIndex].template_name=templateObj[0];
             this.rows[rowIndex].studyId=this.selectedStudytype;
             this.rows[rowIndex].studyNumber=this.studynumber;
-          }
         },
         decrease(count,index){
           if(count>0){
@@ -230,6 +233,15 @@ export default{
     line-height: 41px;
     text-align: center;
     margin-bottom: 1%;
+}
+
+.customformselect{
+  width: 325px;
+}
+
+.tableContainer_forms{
+  max-height: 300px;
+    overflow: auto;
 }
   
 </style>

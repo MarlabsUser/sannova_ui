@@ -41,7 +41,7 @@
 
     <div class="showfileStyle">
       <div class="headerp"><p>All uploaded files</p></div>
-      <div>
+      <div class="tableContainer">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -62,6 +62,11 @@
         </table>
       </div>
     </div>
+    <div>
+      <ul class="nav">
+        <li class="buttonWrapper"><a href="#" class="clickbutton" @click="viewTemplates">View Template</a></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -70,6 +75,9 @@ import Nav from './Navigation.vue'
 import axios from 'axios'
 import util from '../util.js'
 import api from '../api.js';
+import router from '../router'
+import { toast } from 'vue3-toastify'
+
 export default{
   name:'UploadTemplate',
   data(){
@@ -94,14 +102,34 @@ export default{
             for (const singleFile of event.target.files) {
               formData.append('file', singleFile);
             }
-            let response=await api.postAPI("http://localhost:8090/sannova/upload_template",formData,'multipart/form-data');
+
+            await axios.post("http://localhost:8090/sannova/upload_template",formData,{headers: {'Content-Type': 'multipart/form-data'}})
+                .then(response => {
+                      toast("Templates were uploaded successfully.",{
+                        autoClose: 3000,
+                        type: toast.TYPE.SUCCESS,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
+                })
+                .catch(error => console.log(error));
             this.getFileDetail();
         },
         validateUpload(){
-          alert("Please select study type")
+          toast("Please select study type",{
+                        autoClose: 3000,
+                        type: toast.TYPE.WARNING,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
         },
         validateDelete(){
-          alert("Please select uploaded files")
+          toast("Please select the uploaded files.",{
+                        autoClose: 3000,
+                        type: toast.TYPE.WARNING,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
         },
         async getFileDetail(){
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
@@ -118,6 +146,9 @@ export default{
           }
           let response=await api.deleteAPI('http://localhost:8090/sannova/delete_template?'+element);
           this.getFileDetail();
+        },
+        viewTemplates(){
+          router.push({path:'/viewTemplate'});
         }
     },
   mounted(){
@@ -167,5 +198,15 @@ input[type="file"] {
     text-align: center;
     margin-bottom: 1%;
   }
+
+.tableContainer {
+    max-height: 300px;
+    overflow: auto;
+}
+.table {
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
 
 </style>

@@ -4,7 +4,7 @@ export default {
     getAPI(URL){
         return axios.get(URL)
         .then(response => {return response;})
-        .catch(error => console.log(error));
+        .catch(error => {throw new Error(error)});
     },
     postAPI(URL,body,content_type){
         return axios.post(URL,body,{headers: {'Content-Type': content_type}})

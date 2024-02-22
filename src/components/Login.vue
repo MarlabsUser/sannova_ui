@@ -21,6 +21,7 @@
 <script>
 import axios from 'axios'
 import util from '../util.js'
+import api from '../api.js';
     export default{
         name: 'Login',
         data()
@@ -33,18 +34,24 @@ import util from '../util.js'
             }
         },
         methods: {
-             login(){
-                axios.post("http://localhost:8090/sannova/login",this.formData
-                ,{headers: {'Content-Type': 'application/json'}})
-                .then(response => {
-                  localStorage.setItem("user_info",JSON.stringify(response))
-                  util.afterloginNavigation();
-                })
-                .catch(error => {
-                  console.log("error",error)
-                  alert("Please provide correct cridentail")
-                });
-            },
+          login(){
+                if(this.formData.firstname.trim().length === 0){
+                  alert("Please enter the username.")
+                }else if(this.formData.password.trim().length === 0){
+                  alert("Please enter the password.")
+                }else{
+                  axios.post("http://localhost:8090/sannova/login",this.formData
+                  ,{headers: {'Content-Type': 'application/json'}})
+                  .then(response => {
+                    localStorage.setItem("user_info",JSON.stringify(response))
+                    util.afterloginNavigation();
+                  })
+                  .catch(error => {
+                    console.log("error",error)
+                    alert("Please provide the correct credentials.")
+                  });
+                }
+              },
         },
         mounted(){
           util.navigate();

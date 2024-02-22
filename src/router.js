@@ -3,6 +3,7 @@ import UploadTemplate from './components/UploadTemplate'
 import FormSelection from './components/FormSelection'
 import Reconsiliation from './components/Reconsiliation'
 import FormPrint from './components/FormPrint'
+import ViewTemplate from './components/ViewTemplate'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -28,7 +29,13 @@ const router = createRouter({
       {
         path: '/formPrint',
         component: FormPrint
+      },
+      {
+        path: '/viewTemplate',
+        component: ViewTemplate
       }
+
+      
       
     ]
   })
