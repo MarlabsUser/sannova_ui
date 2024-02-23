@@ -118,7 +118,7 @@ export default{
     },
     methods:{
        async getSerialNumber(){
-          let response=await api.getAPI("http://localhost:8090/sannova/study_number");
+          let response=await api.getAPI("http://localhost:8090/sannova/study_number/"+this.selectedStudytype);
           this.studynumber=response.data;
         },
         async getStudyTypes(){
@@ -126,6 +126,7 @@ export default{
           this.studyitem=response.data;
         },
         async getFileDetail(){
+          this.getSerialNumber();
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
           this.fileDetails=response.data
           if(this.fileDetails.length==0){
@@ -186,7 +187,6 @@ export default{
       },
     mounted(){
       util.navigate();
-      this.getSerialNumber();
       this.getStudyTypes();
       }   
     }

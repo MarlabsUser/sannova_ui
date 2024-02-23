@@ -15,9 +15,9 @@
             </ul>
             <ul class="nav">
                 <li class="uli1_drr">Date Range</li>
-                <li><Datepicker @click="emptyStudyNumber" v-model="fromDate" :preview-format="format" /></li>
+                <li><datepicker @click="emptyStudyNumber" v-model="fromDate"  :inputFormat="customHeadingFormat" /></li>
                 <li>.......</li>
-                <li><Datepicker @click="emptyStudyNumber" v-model="toDate" :preview-format="format"  /></li>
+                <li><datepicker @click="emptyStudyNumber" v-model="toDate" :inputFormat="customHeadingFormat"/></li>
             </ul>
         </div>
         <div>
@@ -25,18 +25,19 @@
                 <li class="buttonWrapper"><a href="#" class="clickbutton" @click="getDetails">Get Details</a></li>
             </ul>
         </div>
-        <div>
+        <div class="tableContainer">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Study #</th>
-                        <th>Form Title</th>
+                        <th>Study name</th>
+                        <th>Form title</th>
                         <th>No. Of form printed</th>
-                        <th>printed by</th>
-                        <th>serial</th>
-                        <th>Date and time</th>
+                        <th>Printed by</th>
+                        <th>Study number</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     <tr v-for="row,index in tableDat" :key="index">
                         <td>{{row.studyType}}</td>
@@ -74,19 +75,13 @@ export default{
     data(){
     const fromDate = ''
     const toDate = ''
-    const format = (date) => {
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-
-        return `Selected date is ${year}-${month}-${day} 00:00:00`;
-        }
+    
     return {
         fromDate,
         toDate,
         serialNumber:'',
-        format,
         tableDat:[],
+        customHeadingFormat: 'dd MMM yyyy'
         }
     },
     methods:{
@@ -95,7 +90,7 @@ export default{
                 const day =inputDate.getDate().toString().padStart(2, "0");
                 const month = (inputDate.getMonth() + 1).toString().padStart(2, "0");
                 const year = inputDate.getFullYear().toString();
-                return year+"-"+month+"-"+day+" 00:00:00";
+                return year+"-"+month+"-"+day;
             }else{
                 return inputDate;
             }
@@ -149,7 +144,7 @@ export default{
                 if(response.length==0){
                     alert("No print found")
                 }else{
-                    util.downloadZipFile(response.data,"reconsiliation.zip")
+                    util.downloadFile(response.data,"reconciliation.xls")
                 }
              
             }
@@ -195,5 +190,9 @@ export default{
     line-height: 41px;
     text-align: center;
     margin-bottom: 1%;
+}
+.tableContainer {
+    max-height: 300px;
+    overflow: auto;
 }
 </style>

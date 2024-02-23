@@ -30,13 +30,13 @@ export default {
             }
         }
     },
-    downloadZipFile(response,fileName){
+    downloadFile(response,fileName){
         try{
             const blob = response;
               const url = window.URL.createObjectURL(blob);
               const link = document.createElement('a');
               link.href = url;
-              link.setAttribute('download',fileName+'.zip');
+              link.setAttribute('download',fileName);
                document.body.appendChild(link);
               link.click()
               window.URL.revokeObjectURL(link);

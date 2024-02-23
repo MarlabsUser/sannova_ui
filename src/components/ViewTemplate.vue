@@ -20,7 +20,6 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Select</th>
               <th>Document Title</th>
               <th>Uploaded By</th>
               <th>Date / Time</th>
@@ -28,7 +27,6 @@
           </thead>
           <tbody>
             <tr v-for="item in fileDetails" :key="item.template_id">
-              <td><input type="checkbox" :id="item.template_id" :value="item.template_id" v-model="template_ids"></td>
               <td>{{ item.template_name }}</td>
               <td>{{ item.uploaded_by }}</td>
               <td>{{ item.created_date }}</td>

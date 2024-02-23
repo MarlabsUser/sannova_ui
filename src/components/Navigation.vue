@@ -5,7 +5,7 @@
     <li :class="uploadTemplate ? 'navlistActive' : 'navlist'" v-if="formData.documentTemplateUpload" @click="navRedirection('uploadTemplate')">Upload Template</li>
     <li :class="viewTemplate ? 'navlistActive' : 'navlist'" v-if="formData.viewTemplate" @click="navRedirection('viewTemplate')">View Template</li>
     <li :class="formSelection ? 'navlistActive' : 'navlist'" v-if="formData.formSelection" @click="navRedirection('formSelection')">Form Selection</li>
-    <li :class="reconsiliation ? 'navlistActive' : 'navlist'" v-if="formData.studyReconcillation" @click="navRedirection('reconsiliation')">Reconsiliation</li>
+    <li :class="reconsiliation ? 'navlistActive' : 'navlist'" v-if="formData.studyReconcillation" @click="navRedirection('reconsiliation')">Reconciliation</li>
   </ul>
   <button type="button" class="logoutS" v-on:click="logout">Logout</button>
 </div>

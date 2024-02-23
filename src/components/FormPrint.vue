@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr v-for="row,index in tableDate.templateDetails" :key="row.index">
-                <td>{{index}}</td>
+                <td>{{index+1}}</td>
                 <td>{{row.template_name}}</td>
                 <td>{{row.formCount}}</td>
                 <td>{{tableDate.studyNumber}}</td>
