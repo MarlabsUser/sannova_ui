@@ -108,13 +108,13 @@ export default{
             } 
 
             if(this.serialNumber!='' && !validSerial){
-                alert("Invalid serialNumber format entered");
+                alert("Invalid Study number");
             } else if(this.serialNumber=='' &&  this.fromDate=='' && this.toDate==''){
-                alert("Please enter serial number or pick date");
+                alert("Please enter serial number or date range");
             }else if(this.fromDate==''&&this.toDate!=''){
-                alert("please enter end date");
+                alert("Please enter from date");
             }else  if(this.fromDate !=''&&this.toDate==''){
-                alert("please enter end date");
+                alert("Please enter end date");
             }else{
                 const payload={
                     "serial_number": this.serialNumber,
