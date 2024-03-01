@@ -41,7 +41,7 @@
 
     <div class="showfileStyle">
       <div class="headerp"><p>All uploaded files</p></div>
-      <div class="tableContainer">
+      <div class="tableContainer_ut">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -114,6 +114,7 @@ export default{
                 })
                 .catch(error => console.log(error));
             this.getFileDetail();
+            event.target.value = ''
         },
         validateUpload(){
           toast("Please select study type",{
@@ -146,6 +147,12 @@ export default{
           }
           let response=await api.deleteAPI('http://localhost:8090/sannova/delete_template?'+element);
           this.getFileDetail();
+          toast("Files were deleted successfully.",{
+                        autoClose: 2000,
+                        type: toast.TYPE.SUCCESS,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
         },
         viewTemplates(){
           router.push({path:'/viewTemplate'});
@@ -199,8 +206,8 @@ input[type="file"] {
     margin-bottom: 1%;
   }
 
-.tableContainer {
-    max-height: 300px;
+.tableContainer_ut {
+    max-height: 290px;
     overflow: auto;
 }
 .table {

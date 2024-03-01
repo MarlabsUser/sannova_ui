@@ -3,6 +3,12 @@
   <div class="main">
     <div>
       <ul class="nav">
+        <li class="uli1_sn">Study Number *</li>
+        <li><input v-model="studynumber" placeholder="please add study number"></li>
+      </ul>
+    </div>
+    <div>
+      <ul class="nav">
         <li class="uli1_sst_fs">Select Study types *</li>
         <li>
           <div class="studyStyle">
@@ -16,12 +22,7 @@
       </ul>
     </div>
   <br>
-    <div>
-      <ul class="nav">
-        <li class="uli1_sn">Study Number *</li>
-        <li><button class="button_sn">{{studynumber}}</button></li>
-      </ul>
-    </div>
+    
     <div><ul class="nav">
         <li class="uli1_ft">From Types *</li>
         <li class="tableContainer_forms">
@@ -107,7 +108,7 @@ export default{
         rows,
         addRow,
         removeRow,
-       studynumber:'',
+       studynumber:"",
        studyitem: [],  
        fileDetails: [], 
        selectedStudytype:''
@@ -117,16 +118,12 @@ export default{
       Nav
     },
     methods:{
-       async getSerialNumber(){
-          let response=await api.getAPI("http://localhost:8090/sannova/study_number/"+this.selectedStudytype);
-          this.studynumber=response.data;
-        },
         async getStudyTypes(){
           let response=await api.getAPI("http://localhost:8090/sannova/study_types");
           this.studyitem=response.data;
         },
         async getFileDetail(){
-          this.getSerialNumber();
+         // this.getSerialNumber();
           let response=await api.getAPI("http://localhost:8090/sannova/template_details/"+this.selectedStudytype);
           this.fileDetails=response.data
           if(this.fileDetails.length==0){
@@ -156,9 +153,15 @@ export default{
         increase(count,index){
           this.rows[index].tCount=count+1;
         },
-        confirm(){
-          if(this.rows.length==0){
-            alert("Please select study types and no of files")
+        async confirm(){
+         
+          if(this.studynumber.trim().length==0){
+            toast("Please enter study number",{
+                        autoClose: 2000,
+                        type: toast.TYPE.WARNING,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
           }else{
                 let userinfo=JSON.parse(localStorage.getItem('user_info'));    
                 const finalRequestArray=[];
@@ -179,8 +182,17 @@ export default{
                       "username": userinfo.data.userName,
                       "templateDetails":templatePayload
                     }
-                    localStorage.setItem("form_Print",JSON.stringify(finalPyload))
+                    let response = await api.postAPI("http://localhost:8090/sannova/id_generator/generate"
+                    ,finalPyload,'application/json')
+                    localStorage.setItem("form_Print",JSON.stringify(response.data))
                     router.push({path:'/formPrint'});
+                  }else{
+                    toast("Please select study types and no of files",{
+                        autoClose: 2000,
+                        type: toast.TYPE.WARNING,
+                        newestOnTop: true,
+                        theme: toast.THEME.COLORED,
+                      });
                   }
               }
             }

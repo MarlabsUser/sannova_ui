@@ -15,7 +15,7 @@
                 <td>{{index+1}}</td>
                 <td>{{row.template_name}}</td>
                 <td>{{row.formCount}}</td>
-                <td>{{tableDate.studyNumber}}</td>
+                <td>{{row.first_serial_number}} - {{row.last_serial_number}}</td>
             </tr>
         </tbody>
     </table>
@@ -45,7 +45,7 @@ export default{
     },
     methods:{
         async print(){
-            let response=await api.blobPostAPI("http://localhost:8090/sannova/form_confirmation_details"
+            let response=await api.blobPostAPI("http://localhost:8090/sannova/print_form"
             ,this.tableDate,'application/json');
               try{
                 const blob = response.data;
@@ -56,6 +56,7 @@ export default{
                    document.body.appendChild(link);
                   link.click()
                   window.URL.revokeObjectURL(link);
+                  router.push({path:'/formSelection'});
               }catch(error){
                 console.error('error download ',error)
               }

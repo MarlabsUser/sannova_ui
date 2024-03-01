@@ -110,10 +110,16 @@ body {
 
 .main {
   margin-left: 18%;
-  margin-top: 2%;
-  position: fixed;
-  height: 100%;
-  width: 80%;
+    margin-top: 1%;
+    position: fixed;
+    height: 96%;
+    width: 80%;
+    border: 0.1px solid black;
+    padding: 1%;
+    max-height: 96%;
+    overflow: auto;
+    box-shadow: 4px 4px 16px 4px rgba(0,0,0,0.2);
+    transition: 0.3s;
 }
 
 .customlogo{
